@@ -1,15 +1,31 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {  Navbar as HeroUiNavbar ,NavbarBrand,NavbarContent,NavbarItem,Link,DropdownItem,DropdownTrigger,Dropdown,DropdownMenu,Avatar, Button,} from "@heroui/react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Contexets/authContext';
 
 
 
 export default function MainNavbar() {
+const navigtae = useNavigate() ;
+const { isLoggedin, setisLoggedin } = useContext(AuthContext);
 
-  const isLoggedin = localStorage.getItem("token") != null
 
 
-  
+
+
+  function handleLogout() {
+    localStorage.removeItem("token"); 
+    setisLoggedin(false)
+  }
+
+
+
+function goToLogin() {
+  navigtae("/login")  }
+function goToSignUp() {
+  navigtae("/register")  }
+
+
 
   return (
       <HeroUiNavbar isBordered className='bg-stone-950 text-emerald-400 mb-5'>
@@ -53,7 +69,7 @@ export default function MainNavbar() {
             </DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem onPress={handleLogout} key="logout" color="danger">
               Log Out
             </DropdownItem>
           </DropdownMenu>
@@ -62,12 +78,12 @@ export default function MainNavbar() {
         :
         <>
          <NavbarItem>
-          <Button className='bg-linear-to-tr from-green-500  text-black shadow-lg'  variant="flat">
-            Logoin
+          <Button onPress={goToLogin} className='bg-linear-to-tr from-green-500  text-black shadow-lg'  variant="flat">
+            Login
           </Button>
         </NavbarItem>
          <NavbarItem>
-          <Button className='bg-linear-to-tr from-pink-400 to-black-500 text-black shadow-lg' color="primary" variant="flat">
+          <Button  onPress={goToSignUp} className='bg-linear-to-tr from-pink-400 to-black-500 text-black shadow-lg' color="primary" variant="flat">
             Sign Up
           </Button>
         </NavbarItem>

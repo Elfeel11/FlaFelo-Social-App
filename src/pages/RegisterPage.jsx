@@ -40,7 +40,7 @@ export default function RegisterPage() {
     setisloading(false);
 
     if (data.error) {
-      seterrMsg(data.error);
+      seterrMsg(data);
       setsuccMsg("");
     } else {
       reset()
@@ -74,7 +74,7 @@ export default function RegisterPage() {
           </Button>
           {errMsg && <p className="text-1xl text-red-800 bg-red-400/60 text-center rounded-2xl py-3"> {errMsg} </p>}
           {succMsg&& <p className="text-1xl  bg-green-400 text-center rounded-2xl py-3"> {succMsg} </p>}
-          <p className=" text-red-950">Already have an account? <Link className="text-red-600"  to={"/login"}> Create Account Now </Link> </p>
+          <p className=" text-red-950">Already have an account? <Link className="text-red-600"  to={"/login"}> Login Now </Link> </p>
           
         </div>
       </form>

@@ -1,16 +1,18 @@
 import { Button, Input } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useActionState, useState } from "react";
+import React, { useActionState, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { loginApi } from "../Services/authServices";
 import { Link, useNavigate } from "react-router-dom";
 import { loginScheme } from "./../Schema/LoginScheme";
+import { AuthContext } from "../Contexets/authContext";
 
 export default function loginPage() {
   const [isloading, setisloading] = useState(false);
   const [errMsg, seterrMsg] = useState("");
   const navigate = useNavigate();
   // const errorMsg = "Incorect Email OR Pasword";
+  const { setisLoggedin } = useContext(AuthContext);
 
 
   const { handleSubmit, register, formState: { errors }} = useForm({
@@ -28,9 +30,10 @@ export default function loginPage() {
     setisloading(false);
     if (data.message == "success") {
       localStorage.setItem("token", data.token);
+      setisLoggedin(true);
+
       navigate("/");
     } else {
-      console.log(data);
       seterrMsg(data);
     }
   }
