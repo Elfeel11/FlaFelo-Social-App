@@ -1,20 +1,19 @@
 import React, { useContext } from 'react'
-import {  Navbar as HeroUiNavbar ,NavbarBrand,NavbarContent,NavbarItem,Link,DropdownItem,DropdownTrigger,Dropdown,DropdownMenu,Avatar, Button,} from "@heroui/react";
-import { NavLink, useNavigate } from 'react-router-dom';
+import {  Navbar as HeroUiNavbar ,NavbarBrand,NavbarContent,NavbarItem,Link as HeroUiLink,DropdownItem,DropdownTrigger,Dropdown,DropdownMenu,Avatar, Button,} from "@heroui/react";
+import { NavLink, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../Contexets/authContext';
 
 
 
 export default function MainNavbar() {
 const navigtae = useNavigate() ;
-const { isLoggedin, setisLoggedin } = useContext(AuthContext);
-
+const { isLoggedin, setisLoggedin, userData } = useContext(AuthContext);
 
 
 
 
   function handleLogout() {
-    localStorage.removeItem("token"); 
+    localStorage.removeItem("token")
     setisLoggedin(false)
   }
 
@@ -24,13 +23,15 @@ function goToLogin() {
   navigtae("/login")  }
 function goToSignUp() {
   navigtae("/register")  }
+  function goToProfile() {
+    navigtae("/profile")  }
 
 
 
   return (
-      <HeroUiNavbar isBordered className='bg-stone-950 text-emerald-400 mb-5'>
+      <HeroUiNavbar isBordered className='bg-linear-to-tr to-stone-800 text-black shadow-lg opacity-90 mb-5'>
       <NavbarBrand>
-        <p className="font-bold text-inherit">FlaFelo</p>
+        <Link to={"/"} className="font-bold text-inherit">FlaFelo</Link>
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -58,14 +59,14 @@ function goToSignUp() {
             <Avatar
               as="button"
               className="transition-transform"
-              color="secondary"
+              color=""
               name="Jason Hughes"
               size="sm"
-              src=" " />
+              src={userData?.photo}  />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Default</p>
+            <DropdownItem key="profile" onPress={goToProfile} className="h-14 gap-2">
+              <p className="font-semibold"> {userData?.name} </p>
             </DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>

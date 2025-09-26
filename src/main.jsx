@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')).render(
 
   <StrictMode>
     <HeroUIProvider>
-      <ToastProvider />
+      <ToastProvider placement='top right' />
       <AuthContextProvider>
     <App />
       </AuthContextProvider>
