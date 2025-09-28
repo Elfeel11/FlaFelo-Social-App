@@ -13,9 +13,44 @@ export async function addComment(commentContent, postId){
             headers: {
                 token: localStorage.getItem("token"),
             },
+            
         })
     return data
       } catch (error) {
+        return error.response ? error.response.data.error : error.message;
+        
+    } 
+}
+
+
+
+export async function deleteCommentApi(commentId){
+
+    try {
+        const { data } = await axios.delete( baseUrl + "comments/" + commentId , {
+            headers: {
+                token: localStorage.getItem("token")
+            }
+        })
+    return data
+    } catch (error) {
+        return error.response ? error.response.data.error : error.message;
+        
+    } 
+}
+
+
+
+export async function ubdateCommentApi(commentId, NewCommentContent){
+
+    try {
+        const { data } = await axios.put( baseUrl + "comments/" + commentId ,{ content : NewCommentContent}, {
+            headers: {
+                token: localStorage.getItem("token")
+            }
+        })
+    return data
+    } catch (error) {
         return error.response ? error.response.data.error : error.message;
         
     } 
