@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import {  Navbar as HeroUiNavbar ,NavbarBrand,NavbarContent,NavbarItem,Link as HeroUiLink,DropdownItem,DropdownTrigger,Dropdown,DropdownMenu,Avatar, Button,} from "@heroui/react";
 import { NavLink, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../Contexets/authContext';
+import ProfilePage from '../pages/ProfilePage';
 
 
 
@@ -41,7 +42,7 @@ function goToSignUp() {
           </NavLink>
         </NavbarItem>
         <NavbarItem >
-          <NavLink aria-current="page" color="secondary">
+          <NavLink to={"/profile"} aria-current="page" color="secondary">
             Profile
           </NavLink>
         </NavbarItem>

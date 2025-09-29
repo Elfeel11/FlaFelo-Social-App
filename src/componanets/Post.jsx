@@ -1,10 +1,12 @@
 import React, {  useContext, useState } from "react";
 import Comment from "./Comment";
 import { useNavigate } from "react-router-dom";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Textarea, useDisclosure } from "@heroui/react";
+import { addToast, Button, Input, useDisclosure } from "@heroui/react";
 import { addComment } from "../Services/commentServices";
 import { AuthContext } from "../Contexets/authContext";
 import { deletePostsApi } from "../Services/postServices";
+import CardDrobDown from "./CardDrobDown";
+import ModalComponanets from "./ModalComponanets";
 
 export default function Post({ posts, commentsLimit, callback }) {
   const [VisibleComments, setVisibleComments] = useState(9);
@@ -28,11 +30,14 @@ export default function Post({ posts, commentsLimit, callback }) {
     setisPostDeleting(true);
     const response = await deletePostsApi(posts.id);
     if (response.message == "success"){
-      await callback()
-      setisPostDeleting(false);
-      onClose();
+    await callback()
+    setisPostDeleting(false);
+    onClose();
+    addToast( 
+    {title: "Post deleted successfully", 
+    color: 'success',
+    timeout: 2000  } );
      }
-    
   }
 
   async function handleCommentSubmit() {
@@ -73,32 +78,7 @@ export default function Post({ posts, commentsLimit, callback }) {
             <p className="text-xs text-gray-500">{posts.createdAt}</p>
           </div>
         </div>
-{  posts.user._id == userData?._id &&       <Dropdown>
-      <DropdownTrigger>
- <svg
-          className="w-fit rotate-90 p-1 cursor-pointer outline-none"
-          xmlns="http://www.w3.org/2000/svg"
-          width={27}
-          height={27}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#b0b0b0"
-          strokeWidth={2}
-          strokeLinecap="square"
-          strokeLinejoin="round"
-        >
-          <circle cx={12} cy={12} r={1} />
-          <circle cx={19} cy={12} r={1} />
-          <circle cx={5} cy={12} r={1} />
-        </svg>
-      </DropdownTrigger>
-      <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="edit">Edit</DropdownItem>
-        <DropdownItem  onPress={() => handleOpen(backdrops)} key="delete" className="text-danger" color="danger">
-          Delete
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>}
+{  posts.user._id == userData?._id &&      <CardDrobDown  backdrops={backdrop} handleOpen={handleOpen} />}
 
     
        
@@ -238,8 +218,8 @@ export default function Post({ posts, commentsLimit, callback }) {
 
       </div>
 
-      <div className=" max-h-96 overflow-y-auto ">
-        {posts.comments.slice(0, commentsLimit ?? VisibleComments) .map((comment) => (<Comment key={comment.id}  comment={comment} />     ))}
+      <div>
+        {posts.comments.slice(0, commentsLimit ?? VisibleComments) .map((comment) => (<Comment key={comment._id}  callback={callback} comment={comment} />     ))}
       </div>
 
       {posts.comments.length > VisibleComments && !commentsLimit && (<Button isLoading={isLoading} onPress={loadMoreComments} className="ms-auto block " >  {" "}
@@ -252,29 +232,9 @@ export default function Post({ posts, commentsLimit, callback }) {
         
         
       </div>
-      <Modal backdrop={backdrop} isOpen={isOpen} onClose={onClose}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Delete Post</ModalHeader>
-              <ModalBody>
-                <p>
-                  You won't be able to revert this!
-                </p>
-             
-              </ModalBody>
-              <ModalFooter>
-                <Button color="default" variant="light" onPress={onClose}>
-                  Cancel
-                </Button>
-                <Button isLoading={isPostDeleting} color="danger" onPress={()=> handleDeletepost(onClose) } >
-                  Delete
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+
+      <ModalComponanets isOpen={isOpen} onClose={onClose} backdrop={backdrops} title={"Delete Post"} isCommentDeleting={isPostDeleting} handleDeletComment={handleDeletepost} />
+      
 
 
 

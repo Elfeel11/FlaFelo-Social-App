@@ -7,8 +7,7 @@ const baseUrl = "https://linked-posts.routemisr.com/"
 
 export async function getAllPostsApi(){
 
-    try {
-        const { data } = await axios.get( baseUrl + "posts", {
+  return axios.get( baseUrl + "posts" , { 
             headers: {
                 token: localStorage.getItem("token")
             },
@@ -16,12 +15,7 @@ export async function getAllPostsApi(){
                 limit: 40,
                 sort: "-createdAt",
             }
-        })
-    return data
-    } catch (error) {
-        return error.response ? error.response.data.error : error.message;
-        
-    } 
+})
 }
 
 export async function addPostsApi(formData){
