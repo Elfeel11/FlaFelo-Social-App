@@ -1,4 +1,4 @@
-import { Button, Input, Select, SelectItem, useAlert } from "@heroui/react";
+import { addToast, Button, Input, Select, SelectItem, useAlert } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useActionState, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -42,6 +42,9 @@ export default function RegisterPage() {
     if (data.error) {
       seterrMsg(data);
       setsuccMsg("");
+      addToast({ message: data.error,
+         Color: "danger",
+         timeout: 2000 });
     } else {
       reset()
       seterrMsg("");
@@ -49,6 +52,9 @@ export default function RegisterPage() {
       setTimeout(() => {
         navigate("/login")
       },1000)
+      addToast({ message: "Registered Successfully, Please Login",
+         Color: "success",
+         timeout: 2000 });
     }
   };
 
@@ -72,8 +78,8 @@ export default function RegisterPage() {
           <Button className="text-xl font-bold text-red-950 isLoading={isloading} " type="submit"  color="default"  variant="bordered" >
             Register
           </Button>
-          {errMsg && <p className="text-1xl text-red-800 bg-red-400/60 text-center rounded-2xl py-3"> {errMsg} </p>}
-          {succMsg&& <p className="text-1xl  bg-green-400 text-center rounded-2xl py-3"> {succMsg} </p>}
+          {/* {errMsg && <p className="text-1xl text-red-800 bg-red-400/60 text-center rounded-2xl py-3"> {errMsg} </p>}
+          {succMsg&& <p className="text-1xl  bg-green-400 text-center rounded-2xl py-3"> {succMsg} </p>} */}
           <p className=" text-red-950">Already have an account? <Link className="text-red-600"  to={"/login"}> Login Now </Link> </p>
           
         </div>

@@ -31,10 +31,16 @@ export default function loginPage() {
     if (data.message == "success") {
       localStorage.setItem("token", data.token);
       setisLoggedin(true);
+      addToast({ message: "Logged in Successfully",
+         Color: "success",
+         timeout: 2000 });
 
       navigate("/");
     } else {
       seterrMsg(data);
+      addToast({ message: data.error,
+         Color: "danger",
+         timeout: 2000 });
     }
   }
 
@@ -50,7 +56,7 @@ export default function loginPage() {
           <Button className="text-xl font-bold text-red-950" isLoading={isloading} type="submit" color="default" variant="bordered" >
           Login
           </Button>
-          {errMsg && (<p className="text-1xl text-red-800 bg-red-400/60 text-center rounded-2xl py-3">  {errMsg} </p> )}
+          {/* {errMsg && (<p className="text-1xl text-red-800 bg-red-400/60 text-center rounded-2xl py-3">  {errMsg} </p> )} */}
           <p className=" text-red-950"> U don't have an account? <Link className="text-red-600" to={"/register"}> Create Account Now </Link> </p>
         </div>
       </form>

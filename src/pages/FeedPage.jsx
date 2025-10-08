@@ -5,6 +5,7 @@ import CreatePost from "../componanets/CreatePost";
 import Post from './../componanets/Post';
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { Spinner } from "@heroui/react";
 
 export default function FeedPage() {
 
@@ -15,7 +16,7 @@ export default function FeedPage() {
   
   
   
-  const {data, refetch, isLoading} =useQuery({
+  const {data, refetch, isLoading, isFetching} =useQuery({
     queryKey: ["posts"],
     queryFn: getAllPostsApi,
     
@@ -46,6 +47,9 @@ export default function FeedPage() {
 
 <CreatePost getAllPosts = {refetch} />
   <div className=" grid gap-0.5 p-4 mx-auto max-w-2xl mt-0  ">
+    <div className="justify-center text-center flex">
+    {isFetching && !isLoading && <Spinner color="warning" className="fixed rounded-full shadow-2xl" />}
+    </div>
 
   { isLoading ? <LoadingScreen /> :
     data?.data.posts.map((posts) => <Post callback={refetch} posts={posts} key={posts.id} commentsLimit={1} /> )  

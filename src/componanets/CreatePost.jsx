@@ -11,16 +11,16 @@ export default function CreatePost({getAllPosts}) {
     const [imagePreview, setimagePreview] = useState("")
     const [isPostSubmitting, setisPostSubmitting] = useState(false)
 
-   async function handleCreatePostSubmit(e) {
-     e.preventDefault();
+  async function handleCreatePostSubmit(e) {
+    e.preventDefault();
 
-     if (postCaption.trim() == "" && imageFile == null) {
-       return; 
-     }
-     
-     const formData = new FormData();
-     if (postCaption.trim() != "") {
-       formData.append("body", postCaption);
+    if (postCaption.trim() == "" && imageFile == null) {
+    return; 
+    }
+    
+    const formData = new FormData();
+    if (postCaption.trim() != "") {
+      formData.append("body", postCaption);
       }
       if (imageFile != null) {
         formData.append("image", imageFile); 
@@ -37,9 +37,9 @@ export default function CreatePost({getAllPosts}) {
       
       setisPostSubmitting(false)
 
-   }
-   
-   function hadleFileChange(e) {
+  }
+  
+  function hadleFileChange(e) {
     if (e.target.files.length != 0) { 
       setimageFile(e.target.files[0]);
       setimagePreview(URL.createObjectURL(e.target.files[0]));
@@ -60,10 +60,10 @@ function handleRemoveImage() {
     <div className=" w-full p-4 mx-auto pb-0 max-w-2xl">
 
 
- {showForm ?
+{showForm ?
       <form onSubmit={handleCreatePostSubmit} className="rounded-2xl bg-stone-900 text-white backdrop-blur dark:bg-slate-900/70 shadow-sm">
         {/* header */}
-       
+          {/* User Info and Textarea */}
         <div className="flex items-center justify-between px-4 py-6">
           <div className="flex items-center gap-3">
             <div className="" />
@@ -118,11 +118,11 @@ function handleRemoveImage() {
             
           </div>
 <div className="flex items-center space-x-2">
-           <Button
-
-           onPress={() => setShowForm(false)}
-           type="button"
-           variant="text"
+          {/* Post Button */}
+          <Button
+          onPress={() => setShowForm(false)}
+          type="button"
+          variant="text"
             className="px-4 py-2 text-slate-400 hover:text-gray-500 transition duration-200 disabled:opacity-50" >
             Cancel
             </Button>
@@ -136,7 +136,7 @@ function handleRemoveImage() {
       </form>
     :
 
-     
+
           <div className="flex  rounded-2xl items-center  gap-3 max-w-3xl px-4 py-6  bg-stone-900 text-white w-full  shadow-md">
             <div className="" />
             <img className="h-10 w-10 rounded-full" src={userData?.photo} alt="" />

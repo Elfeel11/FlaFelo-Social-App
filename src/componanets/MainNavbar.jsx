@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import {  Navbar as HeroUiNavbar ,NavbarBrand,NavbarContent,NavbarItem,Link as HeroUiLink,DropdownItem,DropdownTrigger,Dropdown,DropdownMenu,Avatar, Button,} from "@heroui/react";
 import { NavLink, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../Contexets/authContext';
+
 import ProfilePage from '../pages/ProfilePage';
 
 
@@ -41,11 +42,7 @@ function goToSignUp() {
             Feed
           </NavLink>
         </NavbarItem>
-        <NavbarItem >
-          <NavLink to={"/profile"} aria-current="page" color="secondary">
-            Profile
-          </NavLink>
-        </NavbarItem>
+       
       </NavbarContent>
 
 
@@ -66,7 +63,7 @@ function goToSignUp() {
               src={userData?.photo}  />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" onPress={goToProfile} className="h-14 gap-2">
+            <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold"> {userData?.name} </p>
             </DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>
