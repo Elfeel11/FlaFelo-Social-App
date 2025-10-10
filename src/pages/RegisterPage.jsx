@@ -10,8 +10,7 @@ import { registerScheme } from './../Schema/RegisterScheme';
 
 export default function RegisterPage() {
   const [isloading, setisloading] = useState(false);
-  const [errMsg, seterrMsg] = useState("");
-  const [succMsg, setsuccMsg] = useState("");
+
   const navigate = useNavigate()
 
 
@@ -33,22 +32,16 @@ export default function RegisterPage() {
   });
 
   async function HndleRegister(formdata) {
-    seterrMsg("")
-    setsuccMsg("")
     setisloading(true);
     const data = await registerApi(formdata);
     setisloading(false);
 
     if (data.error) {
-      seterrMsg(data);
-      setsuccMsg("");
       addToast({ message: data.error,
          Color: "danger",
          timeout: 2000 });
     } else {
       reset()
-      seterrMsg("");
-      setsuccMsg(data.message);
       setTimeout(() => {
         navigate("/login")
       },1000)
@@ -75,7 +68,7 @@ export default function RegisterPage() {
             <SelectItem key={"male"}>Male</SelectItem>
             <SelectItem key={"female"}>Female</SelectItem>
           </Select>
-          <Button className="text-xl font-bold text-red-950 isLoading={isloading} " type="submit"  color="default"  variant="bordered" >
+          <Button isLoading={isloading} className="text-xl font-bold text-red-950 isLoading={isloading} " type="submit"  color="default"  variant="bordered" >
             Register
           </Button>
           {/* {errMsg && <p className="text-1xl text-red-800 bg-red-400/60 text-center rounded-2xl py-3"> {errMsg} </p>}
