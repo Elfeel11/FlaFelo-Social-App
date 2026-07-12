@@ -37,7 +37,7 @@ export default function RegisterPage() {
     setisloading(false);
 
     if (data.error) {
-      addToast({ message: data.error,
+      addToast({ title: data.error,
          color: "danger",
          timeout: 2000 });
     } else {
@@ -45,7 +45,7 @@ export default function RegisterPage() {
       setTimeout(() => {
         navigate("/login")
       },1000)
-      addToast({ message: "Registered Successfully, Please Login",
+      addToast({ title: "Registered Successfully, Please Login",
          color: "success",
          timeout: 2000 });
     }
