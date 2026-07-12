@@ -34,7 +34,7 @@ export default function loginPage() {
       localStorage.setItem("token", data.token);
       setisLoggedin(true);
       addToast({ message: "Logged in Successfully",
-         Color: "success",
+         color: "success",
          timeout: 2000 });
 
       navigate("/");
