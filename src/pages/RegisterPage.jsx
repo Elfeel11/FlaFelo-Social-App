@@ -38,7 +38,7 @@ export default function RegisterPage() {
 
     if (data.error) {
       addToast({ message: data.error,
-         Color: "danger",
+         color: "danger",
          timeout: 2000 });
     } else {
       reset()
@@ -46,7 +46,7 @@ export default function RegisterPage() {
         navigate("/login")
       },1000)
       addToast({ message: "Registered Successfully, Please Login",
-         Color: "success",
+         color: "success",
          timeout: 2000 });
     }
   };
