@@ -33,14 +33,14 @@ export default function loginPage() {
     if (data.message == "success") {
       localStorage.setItem("token", data.token);
       setisLoggedin(true);
-      addToast({ message: "Logged in Successfully",
+      addToast({ title: "Logged in Successfully",
          color: "success",
          timeout: 2000 });
 
       navigate("/");
     } else {
       seterrMsg(data);
-      addToast({ message: data.error,
+      addToast({ title: data.error,
          color: "danger",
          timeout: 2000 });
     }
