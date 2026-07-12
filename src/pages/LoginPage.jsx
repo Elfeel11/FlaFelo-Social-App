@@ -1,4 +1,4 @@
-import { Button, Input } from "@heroui/react";
+import { Button, Input , useToast } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useActionState, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,6 +11,8 @@ export default function loginPage() {
   const [isloading, setisloading] = useState(false);
   const [errMsg, seterrMsg] = useState("");
   const navigate = useNavigate();
+    const { addToast } = useToast();
+
   // const errorMsg = "Incorect Email OR Pasword";
   const { setisLoggedin } = useContext(AuthContext);
 
@@ -39,7 +41,7 @@ export default function loginPage() {
     } else {
       seterrMsg(data);
       addToast({ message: data.error,
-         Color: "danger",
+         color: "danger",
          timeout: 2000 });
     }
   }
